@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- JNLP File for Swing Counter Application -->
+<jnlp spec="1.0+" codebase="." href="GuiDemo.jnlp">
+   <information>
+      <title>GuiDemo</title>
+      <vendor>ME</vendor>
+      <description>Swing Counter Web Start</description>
+   </information>
+   <resources>
+      <j2se version="1.4+" />
+      <jar href="./GuiDemo.jar" />
+   </resources>
+   <application-desc main-class="PhoneForm" />
+</jnlp>

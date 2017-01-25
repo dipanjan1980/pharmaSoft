@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+ 
+    <!-- Enables the Spring MVC @Controller programming model -->
+    <annotation-driven />
+
+	<context:annotation-config />
+ 	<context:component-scan base-package="com.hms" />
+ 
+    <beans:bean id="ds" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <beans:property name="url" value="jdbc:mysql://localhost:3306/hms" />
+        <beans:property name="username" value="root" />
+        <beans:property name="password" value="root" />
+    </beans:bean>
+ 
+    <beans:bean id="userDao" class="com.hms.common.dao.UserDaoImpl">
+        <beans:property name="ds" ref="ds" />
+    </beans:bean>
+    <beans:bean id="userService" class="com.hms.common.service.UserServiceImpl">
+        <beans:property name="userDao" ref="userDao"></beans:property>
+    </beans:bean>
+     
+     
+    <beans:bean id="menuDao" class="com.hms.common.dao.MenuDaoImpl">
+        <beans:property name="ds" ref="ds" />
+    </beans:bean>
+    <beans:bean id="menuService" class="com.hms.common.service.MenuServiceImpl">
+        <beans:property name="menuDao" ref="menuDao"></beans:property>
+    </beans:bean>
+    <beans:bean id="menuBuilder" class="com.hms.common.business.UserMenuListBuilder">
+        <beans:property name="menuDao" ref="menuDao"></beans:property>
+    </beans:bean>
+    <beans:bean id="menuController" class="com.hms.common.controller.MenuController">
+        <beans:property name="menuBuilder" ref="menuBuilder"></beans:property>
+    </beans:bean>
+
+
+    <beans:bean id="itemCategoryDao" class="com.hms.pharmacy.inventory.dao.ItemCategoryDaoImpl">
+        <beans:property name="ds" ref="ds" />
+    </beans:bean>
+    <beans:bean id="itemCategoryService" class="com.hms.pharmacy.inventory.service.ItemCategoryServiceImpl">
+        <beans:property name="itemCategoryDao" ref="itemCategoryDao"></beans:property>
+    </beans:bean>
+
+    
+    <beans:bean id="genericDao" class="com.hms.pharmacy.inventory.dao.MedicineGenericDaoImpl">
+        <beans:property name="ds" ref="ds" />
+    </beans:bean>
+    <beans:bean id="genericService" class="com.hms.pharmacy.inventory.service.GenericServiceImpl">
+        <beans:property name="genericDao" ref="genericDao"></beans:property>
+    </beans:bean>
+    <beans:bean id="genericFinder" class="com.hms.finder.GenericFinder">
+        <beans:property name="genericDao" ref="genericDao"></beans:property>
+    </beans:bean>
+    <beans:bean id="genericFinderController" class="com.hms.finder.GenericFinderController">
+        <beans:property name="genericFinder" ref="genericFinder"></beans:property>
+    </beans:bean>
+    
+</beans:beans>
