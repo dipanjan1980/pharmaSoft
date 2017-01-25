@@ -93,7 +93,7 @@
       </tr>    	
       <tr height="40">
      	  <td class="login">
-          	Role
+          	Role:
 		  </td>
      	  <td>
      	  	<select name="role" class="box">
